@@ -8,12 +8,13 @@ import 'package:golf_booking/user/models/model_auth.dart';
 
 //한글로 변경하기
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
 void main() async {
-  KakaoSdk.init(nativeAppKey: 'cabe22c5b77d5ccb76329f385f2251c9',javaScriptAppKey: '5c27f040a4944296c9d6b5586c9360b2');
+  KakaoSdk.init(nativeAppKey: 'fec0f2a42d84db29501544331c0cf23c',javaScriptAppKey: '19f7be6f5689b78423cdbfd506762743');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initializeDateFormatting();

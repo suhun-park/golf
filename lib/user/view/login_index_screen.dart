@@ -11,6 +11,10 @@ import 'package:golf_booking/user/component/custompassword.dart';
 import 'package:golf_booking/user/component/headline.dart';
 import 'package:golf_booking/user/view/login_screen.dart';
 import 'package:golf_booking/user/view/signup_screen.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+
+import '../../kakaologin/component/social_login.dart';
+import '../../kakaologin/model/kakao_model.dart';
 
 class Login_Index_Screen extends StatefulWidget {
   const Login_Index_Screen({Key? key}) : super(key: key);
@@ -20,6 +24,26 @@ class Login_Index_Screen extends StatefulWidget {
 }
 
 class _Login_Index_ScreenState extends State<Login_Index_Screen> {
+
+
+  void userCheck() async{
+    OAuthToken? token = await TokenManagerProvider.instance.manager.getToken();
+    if(token != null){
+      try {
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+      }catch(e) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (_) => Login_Index_Screen()),
+                (route) => false);
+      }
+    }else{
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (_) => Login_Index_Screen()),
+              (route) => false);
+    }
+  }
   final CarouselController _controller = CarouselController();
   int _current = 0;
 
@@ -256,7 +280,15 @@ class _Login_Index_ScreenState extends State<Login_Index_Screen> {
                               fontSize: 16.0,
                               decoration: TextDecoration.underline,
                               color: Colors.grey),
-                        ))
+                        )),
+                    TextButton(
+                        onPressed: ()async {
+                          final viewModel = KakaoModel(KakaoLogin());
+                          await viewModel.login();
+                          userCheck();
+                        },
+                        child: Image.asset("assets/images/auth/kakao.png",scale: 10,)),
+
                   ],
                 )
               ],

@@ -14,6 +14,10 @@ import 'package:golf_booking/const/styles.dart';
 import 'package:golf_booking/screen/datails_screen.dart';
 import 'package:golf_booking/screen/profile_screen.dart';
 import 'package:golf_booking/screen/saved_booking.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+
+import '../kakaologin/component/social_login.dart';
+import '../kakaologin/model/kakao_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,7 +25,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
   CollectionReference product = FirebaseFirestore.instance.collection('items');
   CollectionReference mainBanner =
@@ -178,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '더보기',
+                        '더보기', //테스트
                         style: TextStyle(
                             fontSize: 11,
                             letterSpacing: 1,

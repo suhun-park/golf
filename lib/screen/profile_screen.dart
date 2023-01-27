@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:golf_booking/component/custom_image_box.dart';
 import 'package:golf_booking/const/styles.dart';
 
+import '../kakaologin/component/social_login.dart';
+import '../kakaologin/model/kakao_model.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = KakaoModel(KakaoLogin());
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F8),
       appBar: AppBar(
@@ -95,7 +99,9 @@ class ProfileScreen extends StatelessWidget {
                       ]),
                 ),
               ),
-              ProfileOption(text: '프로필 수정', onClick: () {}),
+              ProfileOption(text: '프로필 수정', onClick: () {//잠깐이용
+                viewModel.logout();
+              }),
               ProfileOption(text: '쿠폰 캐시관리', onClick: () {}),
               ProfileOption(text: '결제 수단 등록', onClick: () {}),
               ProfileOption(text: '이용 내역', onClick: () {}),

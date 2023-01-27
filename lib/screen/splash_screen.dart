@@ -1,15 +1,53 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:golf_booking/const/styles.dart';
 import 'package:golf_booking/payment/view/payment_screen.dart';
+import 'package:golf_booking/screen/home_screen.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:http/http.dart' as http;
 
-class Splash_Screen extends StatelessWidget {
+import '../kakaologin/component/data.dart';
+import '../user/view/login_index_screen.dart';
+
+class Splash_Screen extends StatefulWidget {
   const Splash_Screen({Key? key}) : super(key: key);
 
+  @override
+  State<Splash_Screen> createState() => _Splash_ScreenState();
+}
+
+class _Splash_ScreenState extends State<Splash_Screen> {
+  final storage = FlutterSecureStorage();
+  void initState() {
+    super.initState();
+    checkToken();
+  }
+  void checkToken() async{
+    OAuthToken? token = await TokenManagerProvider.instance.manager.getToken();
+    if(token != null){
+    try {
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+    }catch(e) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (_) => Login_Index_Screen()),
+              (route) => false);
+    }
+  }else{
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (_) => Login_Index_Screen()),
+              (route) => false);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final ButtonStyle style =
     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-    return (Scaffold(
+    return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Center(
         child: Column(
@@ -52,13 +90,13 @@ class Splash_Screen extends StatelessWidget {
               onPressed: () {
                 // Navigator.pushReplacementNamed(context, "auth-index");
                 //Navigator.pushReplacementNamed(context, "/");
-                Navigator.push(context,MaterialPageRoute(builder: (context) => PaymentScreen()));
+                Navigator.push(context,MaterialPageRoute(builder: (context) => Login_Index_Screen()));
               },
               child: const Text('시작하기'),
             )
           ],
         ),
       ),
-    ));
+    );
   }
 }
