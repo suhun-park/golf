@@ -13,7 +13,6 @@ class KakaoModel {
     isLogined =await _socialLogin.login();
     if(isLogined) {
       user = await UserApi.instance.me();
-      print(user);
     }
   }
   Future logout() async {

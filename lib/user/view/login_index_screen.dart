@@ -13,8 +13,10 @@ import 'package:golf_booking/user/view/login_screen.dart';
 import 'package:golf_booking/user/view/signup_screen.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
-import '../../kakaologin/component/social_login.dart';
-import '../../kakaologin/model/kakao_model.dart';
+import '../login/kakaologin/component/social_login.dart';
+import '../login/kakaologin/model/kakao_model.dart';
+
+
 
 class Login_Index_Screen extends StatefulWidget {
   const Login_Index_Screen({Key? key}) : super(key: key);

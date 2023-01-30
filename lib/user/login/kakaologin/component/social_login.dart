@@ -24,7 +24,6 @@ class KakaoLogin implements SocialLogin{
        try {
          await UserApi.instance.loginWithKakaoTalk();
          String authCode = await AuthCodeClient.instance.toString();
-         print(authCode);
          return true;
        } catch (e) {
          return false;
@@ -32,8 +31,6 @@ class KakaoLogin implements SocialLogin{
      }else {
        try {
          OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-         print(token);
-         print(token.accessToken);
 
          final url = Uri.https('kapi.kakao.com', '/v2/user/me');
 
@@ -47,9 +44,12 @@ class KakaoLogin implements SocialLogin{
          await storage.write(key: ACCESS_TOKEN_KEY, value: token.accessToken);
          await storage.write(key: REFRESH_TOKEN_KEY,value: token.refreshToken);
          TokenManagerProvider.instance.manager.setToken(token);
-         final viewModel = KakaoModel(KakaoLogin());
-         print(viewModel.user?.kakaoAccount?.profile);
-         print(viewModel.user?.kakaoAccount?.email);
+         User? user;
+         user = await UserApi.instance.me();
+         print(user?.kakaoAccount?.email);
+
+         AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
+         print(tokenInfo.expiresIn);
          return true;
        }catch(e){
          return false;

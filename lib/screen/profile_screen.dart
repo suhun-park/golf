@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golf_booking/component/custom_image_box.dart';
 import 'package:golf_booking/const/styles.dart';
+import 'package:provider/provider.dart';
 
-import '../kakaologin/component/social_login.dart';
-import '../kakaologin/model/kakao_model.dart';
+import '../user/login/kakaologin/component/social_login.dart';
+import '../user/login/kakaologin/model/kakao_model.dart';
+
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -99,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                       ]),
                 ),
               ),
-              ProfileOption(text: '프로필 수정', onClick: () {//잠깐이용
+              ProfileOption(text: '설정', onClick: () {//잠깐이용
                 viewModel.logout();
               }),
               ProfileOption(text: '쿠폰 캐시관리', onClick: () {}),

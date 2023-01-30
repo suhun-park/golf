@@ -9,7 +9,10 @@ import 'package:golf_booking/screen/home_screen.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:http/http.dart' as http;
 
-import '../kakaologin/component/data.dart';
+import '../user/login/firebaselogin/view/login_screen.dart';
+import '../user/login/kakaologin/component/data.dart';
+import '../user/login/kakaologin/component/social_login.dart';
+import '../user/login/kakaologin/model/kakao_model.dart';
 import '../user/view/login_index_screen.dart';
 
 class Splash_Screen extends StatefulWidget {
@@ -21,15 +24,17 @@ class Splash_Screen extends StatefulWidget {
 
 class _Splash_ScreenState extends State<Splash_Screen> {
   final storage = FlutterSecureStorage();
+  final viewModel = KakaoModel(KakaoLogin());
   void initState() {
     super.initState();
     checkToken();
   }
   void checkToken() async{
     OAuthToken? token = await TokenManagerProvider.instance.manager.getToken();
-    if(token != null){
+    if(token?.refreshToken !=null){
     try {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+      await storage.write(key: ACCESS_TOKEN_KEY, value: token?.accessToken);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
     }catch(e) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
@@ -71,7 +76,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
                         image: AssetImage('assets/images/customlogo.png'),
                         fit: BoxFit.contain))),
             SizedBox(height: 40.0,),
-            ElevatedButton(
+           /* ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 onPrimary: Styles.backgroundColor,
@@ -93,7 +98,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
                 Navigator.push(context,MaterialPageRoute(builder: (context) => Login_Index_Screen()));
               },
               child: const Text('시작하기'),
-            )
+            )*/
           ],
         ),
       ),
