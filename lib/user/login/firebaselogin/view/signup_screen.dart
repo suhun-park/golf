@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakaouser;
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 import '../../../../screen/home_screen.dart';
+import '../../component/data.dart';
 
 class SignUpScreen extends StatefulWidget {
   final String? verificationId;
@@ -20,6 +22,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final storage = FlutterSecureStorage();
 
   Widget build(BuildContext context) {
     String phoneText;
@@ -72,6 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 kakaouser.User? kuser;
                 kuser = await UserApi.instance.me();
                 final token  = await auth.signInWithCredential(credential);
+                await storage.write(key: FIREBASE_TOKEN_KEY, value: token.user?.uid);
                 await  FirebaseFirestore.instance
                     .collection('user')
                     .doc()

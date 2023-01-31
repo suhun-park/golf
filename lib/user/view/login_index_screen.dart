@@ -13,6 +13,7 @@ import 'package:golf_booking/user/view/login_screen.dart';
 import 'package:golf_booking/user/view/signup_screen.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
+import '../login/component/firebase_call.dart';
 import '../login/kakaologin/component/social_login.dart';
 import '../login/kakaologin/model/kakao_model.dart';
 
@@ -33,6 +34,7 @@ class _Login_Index_ScreenState extends State<Login_Index_Screen> {
     if(token != null){
       try {
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+
       }catch(e) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(

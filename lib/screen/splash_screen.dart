@@ -6,11 +6,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:golf_booking/const/styles.dart';
 import 'package:golf_booking/payment/view/payment_screen.dart';
 import 'package:golf_booking/screen/home_screen.dart';
+import 'package:golf_booking/user/login/firebaselogin/view/signup_screen.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:http/http.dart' as http;
 
+import '../user/login/component/firebase_call.dart';
 import '../user/login/firebaselogin/view/login_screen.dart';
-import '../user/login/kakaologin/component/data.dart';
+import '../user/login/component/data.dart';
 import '../user/login/kakaologin/component/social_login.dart';
 import '../user/login/kakaologin/model/kakao_model.dart';
 import '../user/view/login_index_screen.dart';
@@ -34,7 +36,17 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     if(token?.refreshToken !=null){
     try {
       await storage.write(key: ACCESS_TOKEN_KEY, value: token?.accessToken);
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+      print(storage.read(key: ACCESS_TOKEN_KEY));
+      if(await FirebaseCall().getFirebaseData()!=null){
+        try {
+           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+        }catch(e){
+           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
+        }
+      }else{
+         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
+      }
     }catch(e) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(

@@ -8,7 +8,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:http/http.dart'as http;
 
 import '../model/kakao_model.dart';
-import 'data.dart';
+import '../../component/data.dart';
 
 abstract class SocialLogin{
   Future<bool> login();
