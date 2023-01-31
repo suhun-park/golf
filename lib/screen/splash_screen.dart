@@ -36,7 +36,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     if(token?.refreshToken !=null){
     try {
       await storage.write(key: ACCESS_TOKEN_KEY, value: token?.accessToken);
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+      //Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
       print(storage.read(key: ACCESS_TOKEN_KEY));
       if(await FirebaseCall().getFirebaseData()!=null){
         try {
